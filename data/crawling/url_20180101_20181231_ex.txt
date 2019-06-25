@@ -1,0 +1,1 @@
+['//news.nate.com/view/20180101n12030?mid=n1006', '//news.nate.com/view/20180101n16131?mid=n1006', '//news.nate.com/view/20180101n07879?mid=n1008', '//news.nate.com/view/20180101n12332?mid=n1008', '//news.nate.com/view/20180101n19030?mid=n1008']
