@@ -4,8 +4,8 @@ import os
 
 upper_loc=os.path.dirname(os.path.realpath(__file__))
 FEATURE_DATAPATH =upper_loc+"/data/feature/feature_{START}_{END}_{TYPE}_{DETAIL}.sav" # for pickle file output(train/test)
-raw_DATAPATH = upper_loc+"data/crawling/url_{START}_{END}_{FORMAT}.sav"
-url_DATAPAHT=upper_loc+"/data/crawling/url_{START}_{END}.pkl"
+raw_DATAPATH = upper_loc+"data/crawling/url_{START}_{END}_{FORMAT}"
+url_DATAPAHT=upper_loc+"/data/crawling/url_{START}_{END}"
 
 # url 데이터를 가져온다
 '''
@@ -13,7 +13,7 @@ start: url 수집 시작 날짜
 end: url 수집 종료 날짜
 '''
 def read_url(start,end):
-    with open(url_DATAPAHT.format(START=start,END=end),"rb") as infile:
+    with open(url_DATAPAHT.format(START=start,END=end)+'.pkl',"rb") as infile:
         df=cPickle.load(infile)
     return df
 
@@ -24,8 +24,13 @@ start: url 수집 시작 날짜
 end: url 수집 종료 날짜
 '''
 def save_url(res,start,end):
-    with open(url_DATAPAHT.format(START=start,END=end),"wb") as outfile:
+    with open(url_DATAPAHT.format(START=start,END=end)+'.pkl',"wb") as outfile:
         cPickle.dump(res,outfile,-1)
+    try:
+        with open(url_DATAPAHT.format(START=start,END=end)+'_ex.txt',"w") as outfile:
+            outfile.write(str(res[:5]))
+    except:
+        pass
     return 
 
 # 크롤링된 데이터를 가져온다
@@ -35,8 +40,8 @@ end: url 수집 종료 날짜
 format_: 댓글인 경우 com, 본문인 경우 atl 입력
 '''
 def read_raw(start,end,format_):
-    infile=raw_DATAPATH.format(START=start,END=end,FORMAT=format_)
-    df = joblib.load(infile)
+    infilepath=raw_DATAPATH.format(START=start,END=end,FORMAT=format_)
+    df = joblib.load(infilepath+'.sav')
     return df
 
 #크롤링된 데이터를 저장한다
@@ -47,8 +52,13 @@ end: url 수집 종료 날짜
 format_: 댓글인 경우 com, 본문인 경우 atl 입력
 '''
 def save_raw(res,start,end,format_):
-    outfile=raw_DATAPATH.format(START=start,END=end,FORMAT=format_)
-    joblib.dump(res,outfile)
+    outfilepath=raw_DATAPATH.format(START=start,END=end,FORMAT=format_)
+    joblib.dump(res,outfilepath+'.sav')
+    try:
+        with open(outfilepath+'_ex.txt') as outfile:
+            outfile.write(str(res.head(5)))
+    except:
+        pass
     return 
 
 #feature 데이터를 가져온다.
