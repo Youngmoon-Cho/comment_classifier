@@ -1,0 +1,13 @@
+fileio import 코드: 아래 코드를 가져다 붙인다.
+--------------------------------
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+from fileio import *
+
+---------------------------------
+fileio는 6개의 함수가 존재한다.
+-url을 저장/호출하는 함수: save_url, read_url
+-댓글이나 본문 데이터를 저장/호출하는 함수: save_raw,read_raw
+-feature 데이터를 저장/호출하는 함수: save_feature,read_feature
+-자세한 기능은 fileio.py 파일에 잘 설명되어 있음
