@@ -1,6 +1,8 @@
 import _pickle as cPickle
 from sklearn.externals import joblib
 import os
+import pandas as pd
+import numpy as np
 
 upper_loc=os.path.dirname(os.path.realpath(__file__))
 FEATURE_DATAPATH =upper_loc+"/data/feature/feature_{START}_{END}_{TYPE}_{DETAIL}.sav" # for pickle file output(train/test)
@@ -24,13 +26,12 @@ start: url 수집 시작 날짜
 end: url 수집 종료 날짜
 '''
 def save_url(res,start,end):
+    assert isinstance(res,list)
+
     with open(url_DATAPAHT.format(START=start,END=end)+'.pkl',"wb") as outfile:
         cPickle.dump(res,outfile,-1)
-    try:
-        with open(url_DATAPAHT.format(START=start,END=end)+'_ex.txt',"w") as outfile:
-            outfile.write(str(res[:5]))
-    except:
-        pass
+    with open(url_DATAPAHT.format(START=start,END=end)+'_ex.txt',"w") as outfile:
+        outfile.write(str(res[:5]))
     return 
 
 # 크롤링된 데이터를 가져온다
@@ -52,13 +53,15 @@ end: url 수집 종료 날짜
 format_: 댓글인 경우 com, 본문인 경우 atl 입력
 '''
 def save_raw(res,start,end,format_):
+    assert isinstance(res,pd.DataFrame)
+
     outfilepath=raw_DATAPATH.format(START=start,END=end,FORMAT=format_)
     joblib.dump(res,outfilepath+'.sav')
-    try:
-        with open(outfilepath+'_ex.txt') as outfile:
+    with open(outfilepath+'_ex.txt') as outfile:
+
+        with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+            outfile.write('data length: {}\n header_list: {} \n'.format(res.shape[0],list(res.columns.values))+'\n'+'_'*40+'\n')
             outfile.write(str(res.head(5)))
-    except:
-        pass
     return 
 
 #feature 데이터를 가져온다.
@@ -82,6 +85,8 @@ type_: feature 특징
 detail: 테스트 데이터는 test, 훈련 데이터는 train
 '''
 def save_feature(res,start,end,type_,detail):
+    assert isinstance(res,np.array)
+
     outfile=FEATURE_DATAPATH.format(START=start,END=end,TYPE=type_,DETATIL=detail)
     joblib.dump(res,outfile)
     return 

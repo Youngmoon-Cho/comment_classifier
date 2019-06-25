@@ -8,6 +8,12 @@ from fileio import *
 ---------------------------------
 fileio는 6개의 함수가 존재한다.
 -url을 저장/호출하는 함수: save_url, read_url
+-url은 무조건 list 형태이여야 한다.
+
 -댓글이나 본문 데이터를 저장/호출하는 함수: save_raw,read_raw
+-본문 데이터는 dataframe형식을 가져야만 한다.
+
 -feature 데이터를 저장/호출하는 함수: save_feature,read_feature
+-feature는  nparray 형식을 가져야만 한다.
+
 -자세한 기능은 fileio.py 파일에 잘 설명되어 있음
