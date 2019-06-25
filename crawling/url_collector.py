@@ -17,7 +17,7 @@ def url_test(URL):
     with open("url_collector_sample.txt","w") as outfile:
         outfile.write(rough_data)
 '''
-from bs4 import BeautifulSoup
+
 def test_url_extractor(URL):
     url_list=list()
     html=requests.get(url=URL).text
