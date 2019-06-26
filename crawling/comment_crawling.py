@@ -96,10 +96,7 @@ def main():
             save_raw(df,START,END,file_form.format(file_cnt))
             file_cnt+=1
             df=pd.DataFrame(columns=['comment','like','dislike','date','id'])
-<<<<<<< HEAD
     save_raw(df,START,END,file_form.format(file_cnt))
-=======
->>>>>>> d95a5ce6fa8eba88c349dc41099e5a20e68d6672
 
 
     
