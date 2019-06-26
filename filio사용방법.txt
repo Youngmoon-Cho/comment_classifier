@@ -16,4 +16,4 @@ fileio는 6개의 함수가 존재한다.
 -feature 데이터를 저장/호출하는 함수: save_feature,read_feature
 -feature는  nparray 형식을 가져야만 한다.
 
--자세한 기능은 fileio.py 파일에 잘 설명되어 있음
+-자세한 기능과 파일 저장 형태는 fileio.py 파일에 설명되어 있음

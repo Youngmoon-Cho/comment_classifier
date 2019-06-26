@@ -3,11 +3,13 @@ from sklearn.externals import joblib
 import os
 import pandas as pd
 import numpy as np
-
 upper_loc=os.path.dirname(os.path.realpath(__file__))
 FEATURE_DATAPATH =upper_loc+"/data/feature/feature_{START}_{END}_{TYPE}_{DETAIL}.sav" # for pickle file output(train/test)
-raw_DATAPATH = upper_loc+"data/crawling/url_{START}_{END}_{FORMAT}"
+raw_DATAPATH = upper_loc+"/data/crawling/raw_{START}_{END}_{FORMAT}"
 url_DATAPAHT=upper_loc+"/data/crawling/url_{START}_{END}"
+if __name__ == "__main__":
+    print(upper_loc)
+
 
 # url 데이터를 가져온다
 '''
@@ -24,6 +26,9 @@ def read_url(start,end):
 res: url이 담겨 있는 list
 start: url 수집 시작 날짜
 end: url 수집 종료 날짜
+
+ex> 
+url_20180101_20181231.pkl
 '''
 def save_url(res,start,end):
     assert isinstance(res,list)
@@ -51,13 +56,16 @@ res: 크롤링한 dataframe 데이터
 start: url 수집 시작 날짜
 end: url 수집 종료 날짜
 format_: 댓글인 경우 com, 본문인 경우 atl 입력
+
+ex>
+raw_20180101_20181231_com.sav
 '''
 def save_raw(res,start,end,format_):
     assert isinstance(res,pd.DataFrame)
 
     outfilepath=raw_DATAPATH.format(START=start,END=end,FORMAT=format_)
     joblib.dump(res,outfilepath+'.sav')
-    with open(outfilepath+'_ex.txt') as outfile:
+    with open(outfilepath+'_ex.txt',"w",encoding="utf-8") as outfile:
 
         with pd.option_context('display.max_rows', None, 'display.max_columns', None):
             outfile.write('data length: {}\n header_list: {} \n'.format(res.shape[0],list(res.columns.values))+'\n'+'_'*40+'\n')
@@ -83,10 +91,12 @@ start: url 수집 시작 날짜
 end: url 수집 종료 날짜
 type_: feature 특징
 detail: 테스트 데이터는 test, 훈련 데이터는 train
+
+ex>
+feature_20180101_20181231_tfidf_train.sav
 '''
 def save_feature(res,start,end,type_,detail):
     assert isinstance(res,np.array)
-
     outfile=FEATURE_DATAPATH.format(START=start,END=end,TYPE=type_,DETATIL=detail)
     joblib.dump(res,outfile)
     return 

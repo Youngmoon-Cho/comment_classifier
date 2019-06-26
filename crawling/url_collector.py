@@ -18,7 +18,7 @@ def url_test(URL):
         outfile.write(rough_data)
 '''
 
-def test_url_extractor(URL):
+def url_extractor(URL):
     url_list=list()
     html=requests.get(url=URL).text
     parsed_data=BeautifulSoup(html,'html.parser')
@@ -42,7 +42,7 @@ def main():
     upper_loc=os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     url_list=[]
     for i in dt_list:
-        url_list.extend(test_url_extractor(core_url.format(i)))
+        url_list.extend(url_extractor(core_url.format(i)))
     with open(upper_loc+"/data/crawling/url_{start}_{end}.pkl".format(start=START,end=END),"wb") as outfile:
         cPickle.dump(url_list,outfile,-1)
     with open(upper_loc+"/data/crawling/url_{start}_{end}_ex.txt".format(start=START,end=END),"w") as outfile:
