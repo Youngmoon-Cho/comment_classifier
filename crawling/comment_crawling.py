@@ -45,7 +45,7 @@ def comment_extractor(URL,com_id):
     comm_ox_id="cmt_{}_cnt_{}"
     df=pd.DataFrame(columns=['comment','like','dislike','date','id'])
     com_re=re.compile("<a\s")
-    
+
     while cnt<=min(num_com,100):
         page+=1
         html=requests.get(url=real_url.format(P=page),verify=False).text
@@ -96,7 +96,10 @@ def main():
             save_raw(df,START,END,file_form.format(file_cnt))
             file_cnt+=1
             df=pd.DataFrame(columns=['comment','like','dislike','date','id'])
+<<<<<<< HEAD
     save_raw(df,START,END,file_form.format(file_cnt))
+=======
+>>>>>>> d95a5ce6fa8eba88c349dc41099e5a20e68d6672
 
 
     
