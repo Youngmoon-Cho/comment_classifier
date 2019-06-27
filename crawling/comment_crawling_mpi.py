@@ -170,7 +170,8 @@ def main():
                         df=pd.DataFrame(columns=['comment','like','dislike','date','id'])
                     if not url_list:#url_list is empty
                         break
-                        
+                    if iter_cnt%100==99:
+                        print("url: {}\ncnt: {}".format(url_list[0],loc))
             else:
                 #sendmsg: dataframe
                 SENDMSG=comment_extractor(RECVMSG[0],RECVMSG[1])
