@@ -40,7 +40,7 @@ def comment_extractor(URL,com_id):
     html=requests.get(url=real_url.format(P=1),verify=False).text
     parsed_data=BeautifulSoup(html,'html.parser')
     try:
-        num_com=int(parsed_data.find('a',attrs={'id':'tab_cmt'}).find('strong').contents[0])-23
+        num_com=int(parsed_data.find('a',attrs={'id':'tab_cmt'}).find('strong').contents[0])
     except: # if the article has been deleted, return empty dataframe file
         global error_cnt
         error_cnt+=1
@@ -51,14 +51,14 @@ def comment_extractor(URL,com_id):
                 outfile.write("\n0")
         else:
             with open(del_url_file,'a') as outfile:
-                outifle.write("\n")
+                outfile.write("\n")
                 outfile.write(URL)
                 outfile.write("\n")
                 outfile.write(str(com_id))
         return df
     # 댓글/좋아요/싫어요/작성 날짜
     cnt=0 #댓글 개수
-    page=1 #페이지 수
+    page=0 #페이지 수
     #regular expression/string for passinig
     comm_ox_id="cmt_{}_cnt_{}"
     df=pd.DataFrame(columns=['comment','like','dislike','date','id'])
@@ -68,7 +68,7 @@ def comment_extractor(URL,com_id):
         page+=1
         html=requests.get(url=real_url.format(P=page),verify=False).text
         #comment_raw: comment에 대한 모든 정보가 여기에 적혀 있음: 댓글/좋아요/싫어요/작성 날짜
-        comment_raw=parsed_data.find_all('dl',attrs={"class":["cmt_item f_line","cmt_item"]})
+        comment_raw=parsed_data.find('div',attrs={"class":"cmt_list"}).find_all('dl',attrs={"class":["cmt_item f_line","cmt_item"]})
         cnt+=sum(1 for _ in comment_raw)
         #parsing
         for i in comment_raw:
