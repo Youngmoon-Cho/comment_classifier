@@ -1,5 +1,5 @@
 import _pickle as cPickle
-from sklearn.externals import joblib
+import joblib
 import os
 import pandas as pd
 import numpy as np
